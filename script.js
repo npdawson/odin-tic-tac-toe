@@ -1,6 +1,8 @@
 'use strict';
 
 function newGame(player1 = "Player 1", player2 = "Player 2") {
+	let moves = 0;
+
 	const players = [
 		{
 			name: player1,
@@ -49,9 +51,12 @@ function newGame(player1 = "Player 1", player2 = "Player 2") {
 	const playTurn = (row, column) => {
 		let placed = gameboard.placeToken(row, column, getActivePlayer().token);
 		if (placed) {
+			moves++;
 			let won = checkForWin();
 			if (won) {
 				return getActivePlayer();
+			} else if (moves >= 9) {
+				return { tie: true };
 			}
 			switchPlayerTurn();
 		}
